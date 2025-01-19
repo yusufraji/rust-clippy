@@ -338,6 +338,7 @@ mod significant_drop_tightening;
 mod single_call_fn;
 mod single_char_lifetime_names;
 mod single_component_path_imports;
+mod single_option_map;
 mod single_range_in_vec_init;
 mod size_of_in_element_count;
 mod size_of_ref;

@@ -1,0 +1,21 @@
+error: mapping over single function argument of `Option<T>`, to return `Option<T>`, can be best expressed by applying the map outside of the function.
+  --> tests/ui/single_option_map.rs:3:1
+   |
+LL | / fn h(arg: Option<u32>) -> Option<u32> {
+LL | |     arg.map(|x| x * 2)
+LL | | }
+   | |_^
+   |
+   = note: `-D clippy::single-option-map` implied by `-D warnings`
+   = help: to override `-D warnings` add `#[allow(clippy::single_option_map)]`
+
+error: mapping over single function argument of `Option<T>`, to return `Option<T>`, can be best expressed by applying the map outside of the function.
+  --> tests/ui/single_option_map.rs:7:1
+   |
+LL | / fn j(arg: Option<u64>) -> Option<u64> {
+LL | |     arg.map(|x| x * 2)
+LL | | }
+   | |_^
+
+error: aborting due to 2 previous errors
+
