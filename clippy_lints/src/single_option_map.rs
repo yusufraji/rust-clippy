@@ -55,6 +55,7 @@ impl<'tcx> LateLintPass<'tcx> for SingleOptionMap {
                 && method_name.ident.name == sym::map
                 && let callee_type = cx.typeck_results().expr_ty(callee)
                 && is_type_diagnostic_item(cx, callee_type, sym::Option)
+                && let ExprKind::Path(_path) = callee.kind
             {
                 span_lint(
                     cx,
