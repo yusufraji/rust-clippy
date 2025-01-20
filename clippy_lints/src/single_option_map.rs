@@ -1,4 +1,4 @@
-use clippy_utils::diagnostics::span_lint;
+use clippy_utils::diagnostics::span_lint_and_help;
 use clippy_utils::peel_blocks;
 use clippy_utils::ty::is_type_diagnostic_item;
 use rustc_hir::def_id::LocalDefId;
@@ -57,11 +57,13 @@ impl<'tcx> LateLintPass<'tcx> for SingleOptionMap {
                 && is_type_diagnostic_item(cx, callee_type, sym::Option)
                 && let ExprKind::Path(_path) = callee.kind
             {
-                span_lint(
+                span_lint_and_help(
                     cx,
                     SINGLE_OPTION_MAP,
                     span,
-                    "mapping over single function argument of `Option<T>`, to return `Option<T>`, can be best expressed by applying the map outside of the function.",
+                    "`fn` that only maps over argument",
+                    None,
+                    "move the `.map` to the caller or to an `_opt` function",
                 );
             }
         }
