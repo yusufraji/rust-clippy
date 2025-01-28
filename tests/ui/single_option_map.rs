@@ -6,10 +6,12 @@ static ATOM: AtomicUsize = AtomicUsize::new(42);
 static MAYBE_ATOMIC: Option<&AtomicUsize> = Some(&ATOM);
 
 fn h(arg: Option<u32>) -> Option<u32> {
+    //~^ ERROR: `fn` that only maps over argument
     arg.map(|x| x * 2)
 }
 
 fn j(arg: Option<u64>) -> Option<u64> {
+    //~^ ERROR: `fn` that only maps over argument
     arg.map(|x| x * 2)
 }
 
