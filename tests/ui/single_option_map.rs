@@ -2,7 +2,8 @@
 
 use std::sync::atomic::{AtomicUsize, Ordering};
 
-static MAYBE_ATOMIC: Option<AtomicUsize> = Some(AtomicUsize::new(42));
+static ATOM: AtomicUsize = AtomicUsize::new(42);
+static MAYBE_ATOMIC: Option<&AtomicUsize> = Some(&ATOM);
 
 fn h(arg: Option<u32>) -> Option<u32> {
     arg.map(|x| x * 2)
@@ -13,7 +14,7 @@ fn j(arg: Option<u64>) -> Option<u64> {
 }
 
 fn maps_static_option() -> Option<usize> {
-    MAYBE_ATOMIC.as_ref().map(|a| a.load(Ordering::Relaxed))
+    MAYBE_ATOMIC.map(|a| a.load(Ordering::Relaxed))
 }
 
 fn manipulate(i: i32) -> i32 {

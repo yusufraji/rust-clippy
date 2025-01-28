@@ -52,12 +52,13 @@ impl<'tcx> LateLintPass<'tcx> for SingleOptionMap {
             && matches!(kind, FnKind::ItemFn(_, _, _) | FnKind::Method(_, _))
         {
             let func_body = peel_blocks(body.value);
-            if let ExprKind::MethodCall(method_name, callee, _args, _span) = func_body.kind
+            if let ExprKind::MethodCall(method_name, callee, args, _span) = func_body.kind
                 && method_name.ident.name == sym::map
                 && let callee_type = cx.typeck_results().expr_ty(callee)
                 && is_type_diagnostic_item(cx, callee_type, sym::Option)
                 && let ExprKind::Path(_path) = callee.kind
                 && let Res::Local(_id) = path_res(cx, callee)
+                && !matches!(args[0].kind, ExprKind::Path(_))
             {
                 span_lint_and_help(
                     cx,
