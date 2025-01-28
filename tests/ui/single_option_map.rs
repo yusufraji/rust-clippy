@@ -29,6 +29,17 @@ fn manipulate_opt(opt_i: Option<i32>) -> Option<i32> {
     opt_i.map(manipulate)
 }
 
+// No lint: maps other than the receiver
+fn map_not_arg(arg: Option<u32>) -> Option<u32> {
+    maps_static_option().map(|_| arg.unwrap())
+}
+
+// No lint: wrapper function with η-expanded form
+#[allow(clippy::redundant_closure)]
+fn manipulate_opt_explicit(opt_i: Option<i32>) -> Option<i32> {
+    opt_i.map(|x| manipulate(x))
+}
+
 fn main() {
     let answer = Some(42u32);
     let h_result = h(answer);
